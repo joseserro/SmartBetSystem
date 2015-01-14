@@ -4,11 +4,15 @@ import main.java.tsi.knapsack.KnapsackTester;
 import main.java.tsi.tools.DatabaseConnection;
 import main.java.tsi.tools.Util;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,7 +48,7 @@ public class FrameApostas extends JFrame {
 	private static ArrayList<Double> oddsEscolhidas = new ArrayList<Double>();
 	private JPopupMenu popupMenu;
 
-	public FrameApostas(ConsolaAvancada ca) {
+	public FrameApostas(ConsolaAvancada ca) throws URISyntaxException, IOException {
 		consola = ca;
 		knapConfig = new FrameKnapConfig();
 		apostaManual = new AdicionarAposta();
@@ -58,7 +62,9 @@ public class FrameApostas extends JFrame {
 		popupMenu.setLocation(590, 24);
 		
 		JButton butt = new JButton("");
-		butt.setIcon(new ImageIcon("img/gear.png"));
+        Image buttImg = ImageIO.read(new File(PainelAposta.class.getResource("/main/resources/tsi/img/gear.png").toURI()));
+        butt.setIcon(new ImageIcon(buttImg));
+		//butt.setIcon(new ImageIcon("img/gear.png"));
 		butt.setBounds(590,24,26,26);
 		butt.addActionListener(new ActionListener() {
 			@Override

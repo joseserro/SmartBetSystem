@@ -12,6 +12,7 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
 
 public class PainelAposta extends JPanel {
@@ -23,10 +24,13 @@ public class PainelAposta extends JPanel {
 	
 	{
 		try {
-			delImg = ImageIO.read(new File("img/del.png"));
+			delImg = ImageIO.read(new File(PainelAposta.class.getResource("/main/resources/tsi/img/del.png").toURI()));
+			//delImg = ImageIO.read(new File("img/del.png"));
 		} catch (IOException e) {
-		}
-	}
+		} catch (URISyntaxException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 	public enum TipoAposta {
 		CASA (0,"Casa Ganha"),
 		EMPATE (1,"Empate"),
@@ -80,12 +84,15 @@ public class PainelAposta extends JPanel {
 		oddColor = new Color(r,g,0);
 		
 		try {
-			homeImg = ImageIO.read(new File("img/clubes/"+home+".png"));
-			awayImg = ImageIO.read(new File("img/clubes/"+away+".png"));
-		} catch (IOException e) {
+			homeImg = ImageIO.read(new File(PainelAposta.class.getResource("/main/resources/tsi/img/clubes/"+home+".png").toURI()));
+			//homeImg = ImageIO.read(new File("img/clubes/"+home+".png"));
+			awayImg = ImageIO.read(new File(PainelAposta.class.getResource("/main/resources/tsi/img/clubes/"+away+".png").toURI()));
+			//awayImg = ImageIO.read(new File("img/clubes/"+away+".png"));
+		} catch (IOException | URISyntaxException e) {
 			e.printStackTrace();
 		}
-		List<String[]> equipas = DatabaseConnection.getEquipasList();
+
+        List<String[]> equipas = DatabaseConnection.getEquipasList();
 		for(String[] linha : equipas){
 			if(linha[1].equals(home))
 				this.home=linha[0];

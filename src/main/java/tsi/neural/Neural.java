@@ -1,14 +1,13 @@
 package main.java.tsi.neural;
 
-import java.io.File;
-import java.io.PrintWriter;
-
-import main.java.tsi.tools.DatabaseConnection;
 import weka.classifiers.functions.MultilayerPerceptron;
 import weka.core.Instance;
 import weka.core.Instances;
 import weka.core.converters.CSVLoader;
 import weka.core.converters.ConverterUtils.DataSource;
+
+import java.io.File;
+import java.io.PrintWriter;
 
 public class Neural {
 
@@ -31,9 +30,10 @@ public class Neural {
 		try {
 			
 			CSVLoader trainLoader = new CSVLoader(), testLoader = new CSVLoader();
-			trainLoader.setSource(new File(folder+"/train.csv"));
-			testLoader.setSource(new File(folder+"/test.csv"));
-			
+			trainLoader.setSource(new File(Neural.class.getResource("/main/resources/tsi/"+folder+"/train.csv").toURI()));
+			//testLoader.setSource(new File(folder+"/test.csv"));
+            testLoader.setSource(new File(Neural.class.getResource("/main/resources/tsi/"+folder+"/test.csv").toURI()));
+
 			//trainingSource = new DataSource(DatabaseConnection.class.getResource("/"+folder+"/train.csv").openStream());
 			//testingSource = new DataSource(DatabaseConnection.class.getResource("/"+folder+"/test.csv").openStream());
 			//trainSet = trainingSource.getDataSet(0);
@@ -143,12 +143,11 @@ public class Neural {
 	public double testForOdds(String odds){
 		try {
 			String header = "SIGN, B365H, B365D, B365A, BWH, BWD, BWA, IWH, IWD, IWA, LBH, LBD, LBA, PSH, PSD, PSA, WHH, WHD, WHA, SJH, SJD, SJA, VCH, VCD, VCA";
-			PrintWriter writer = new PrintWriter("/"+folder+"/temp.csv", "UTF-8");
+			PrintWriter writer = new PrintWriter("/main/resources/tsi/"+folder+"/temp.csv", "UTF-8");
 			writer.println(header);
 			writer.println(odds);
 			writer.close();
-			
-			DataSource tempSource = new DataSource(DatabaseConnection.class.getResource("/"+folder+"/temp.csv").openStream());
+			DataSource tempSource = new DataSource(Neural.class.getResource("/main/resources/tsi/"+folder+"/temp.csv").openStream());
 			tempSet = tempSource.getDataSet(0);
 			Instance currInstance = tempSet.instance(0);
 			double[] distForInstance = percep.distributionForInstance(currInstance);
@@ -158,6 +157,5 @@ public class Neural {
 		}
 		return Double.NaN;
 	}
-	
 	
 }

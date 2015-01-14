@@ -30,12 +30,12 @@ public class Gui {
 	public static void createGui(){
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            ca = new ConsolaAvancada();
+            fa = new FrameApostas(ca);
+            fa.start();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		ca = new ConsolaAvancada();
-		fa = new FrameApostas(ca);
-		fa.start();
 	}
 	
 	
