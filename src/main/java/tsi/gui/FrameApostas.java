@@ -1,39 +1,16 @@
-package gui;
+package main.java.tsi.gui;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
+import main.java.tsi.knapsack.KnapsackTester;
+import main.java.tsi.tools.DatabaseConnection;
+import main.java.tsi.tools.Util;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.JFormattedTextField;
-import javax.swing.JButton;
-import javax.swing.JTextField;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.SwingConstants;
-
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import knapsack.KnapsackTester;
-
-
-
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
-
-import tools.DatabaseConnection;
-import tools.Util;
-
-import javax.swing.JPopupMenu;
-import javax.swing.JMenuItem;
 
 public class FrameApostas extends JFrame {
 
@@ -57,7 +34,7 @@ public class FrameApostas extends JFrame {
 	
 	public static JMenuItem mntmApostaManual = new JMenuItem("Adicionar Aposta"),
 			mntmConsolaTestes = new JMenuItem("Consola de Testes"),
-			mntmConfigKnap = new JMenuItem("Configuração Avançada"),
+			mntmConfigKnap = new JMenuItem("ConfiguraÃ§Ã£o AvanÃ§ada"),
 			mntmLimparApostas = new JMenuItem("Limpar Todas as Apostas");
 	
 	private static ConsolaAvancada consola;
@@ -228,7 +205,7 @@ public class FrameApostas extends JFrame {
 		lblLucroDaAposta.setBounds(430, 405, 120, 14);
 		contentPane.add(lblLucroDaAposta);
 
-		valorLucro = new JLabel("0.00€");
+		valorLucro = new JLabel("0.00â‚¬");
 		valorLucro.setHorizontalAlignment(JLabel.RIGHT);
 		valorLucro.setBounds(555, 405, 60, 14);
 		contentPane.add(valorLucro);
@@ -268,7 +245,7 @@ public class FrameApostas extends JFrame {
 		});
 		contentPane.add(btnKnapsack);
 		
-		label = new JLabel("\u20AC"); //€
+		label = new JLabel("\u20AC"); //EURO
 		label.setHorizontalAlignment(SwingConstants.RIGHT);
 		label.setBounds(327, 34, 6, 14);
 		contentPane.add(label);
@@ -280,7 +257,7 @@ public class FrameApostas extends JFrame {
 		listaResultados.repaint();
 		oddsEscolhidas.clear();
 		valorMultiplas.setText("0");
-		valorLucro.setText("0.00€");
+		valorLucro.setText("0.00â‚¬");
 	}
 
 	public void start() {
@@ -331,10 +308,10 @@ public class FrameApostas extends JFrame {
 			String multStr = ""+Util.roundTo(mult, 2);
 			if(multStr.split("\\.")[1].length()==1)
 				multStr+="0";
-			multStr+="€";
+			multStr+="â‚¬";
 			valorLucro.setText(multStr);
 		} else {
-			valorLucro.setText("0.00€");
+			valorLucro.setText("0.00â‚¬");
 		}
 		valorMultiplas.revalidate();
 		valorLucro.revalidate();

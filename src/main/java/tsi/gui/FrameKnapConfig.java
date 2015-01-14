@@ -1,19 +1,12 @@
-package gui;
+package main.java.tsi.gui;
 
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-
-import javax.swing.JFrame;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JSlider;
-import javax.swing.SwingConstants;
-import javax.swing.JSpinner;
-import javax.swing.JButton;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 public class FrameKnapConfig extends JFrame {
 	private static final long serialVersionUID = 3808484122366879216L;
@@ -24,7 +17,7 @@ public class FrameKnapConfig extends JFrame {
 	private static FrameKnapConfig me;
 	public FrameKnapConfig(){
 		me = this;
-		setTitle("Configuração Knapsack");
+		setTitle("ConfiguraÃ§Ã£o Knapsack");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setResizable(false);
 		setSize(380, 310);
@@ -51,13 +44,13 @@ public class FrameKnapConfig extends JFrame {
 		
 		getContentPane().setLayout(null);
 		
-		String[] opti = {"Rede Neuronal","Factor de Confiança","Híbrido"};
+		String[] opti = {"Rede Neuronal","Factor de ConfianÃ§a","HÃ­brido"};
 		optimizacao = new JComboBox<String>(opti);
 		optimizacao.setSelectedIndex(2);
 		optimizacao.setBounds(18, 38, 186, 20);
 		getContentPane().add(optimizacao);
 		
-		JLabel lblOptimizacao = new JLabel("Método Optimização");
+		JLabel lblOptimizacao = new JLabel("MÃ©todo OptimizaÃ§Ã£o");
 		lblOptimizacao.setBounds(18, 19, 114, 14);
 		getContentPane().add(lblOptimizacao);
 		
@@ -97,7 +90,7 @@ public class FrameKnapConfig extends JFrame {
 		lblCapa.setBounds(179, 153, 32, 14);
 		getContentPane().add(lblCapa);
 		
-		JLabel lblGera = new JLabel("Iterações");
+		JLabel lblGera = new JLabel("IteraÃ§Ãµes");
 		lblGera.setBounds(303, 19, 46, 14);
 		getContentPane().add(lblGera);
 		
@@ -133,7 +126,7 @@ public class FrameKnapConfig extends JFrame {
 		lblCruz.setBounds(179, 208, 32, 14);
 		getContentPane().add(lblCruz);
 		
-		JLabel lblAlpha = new JLabel("População");
+		JLabel lblAlpha = new JLabel("PopulaÃ§Ã£o");
 		lblAlpha.setBounds(298, 134, 49, 14);
 		getContentPane().add(lblAlpha);
 		

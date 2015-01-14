@@ -1,4 +1,4 @@
-package knapsack;
+package main.java.tsi.knapsack;
 
 
 import org.opt4j.benchmarks.knapsack.KnapsackBinaryCreatorDecoder;

@@ -1,4 +1,4 @@
-package neural;
+package main.java.tsi.neural;
 
 public class SeedTester {
 	
@@ -57,7 +57,7 @@ public class SeedTester {
 						double media = ((double)totalTempo / ((double)i+1.0)) / 1000.0;
 						double res = media * (double)(NUM_SEEDS - (i+1));
 						
-						System.out.println("CORE "+ac+" - Iteração "+i+" demorou "+seg+" seg. Média: "+media+" seg. Restante: "+res+" seg.");
+						System.out.println("CORE "+ac+" - IteraÃ§Ã£o "+i+" demorou "+seg+" seg. MÃ©dia: "+media+" seg. Restante: "+res+" seg.");
 					}
 					
 					System.out.println("CORE "+ac+" - Seed mais certa: "+seedMaisCerta+" com "+certosNaSeedMaisCerta+" de acertos (em 240)");

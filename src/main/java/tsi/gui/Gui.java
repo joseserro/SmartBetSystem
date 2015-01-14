@@ -1,6 +1,6 @@
-package gui;
+package main.java.tsi.gui;
 
-import viewer.StatusBarNovo;
+import main.java.tsi.viewer.StatusBarNovo;
 
 import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
@@ -45,7 +45,7 @@ public class Gui {
 		botelho.setSize(198,204);
 		botelho.setLocation((int)scrSize.getWidth(), ((int)scrSize.getHeight())-244);
 
-		BufferedImage myPicture = ImageIO.read(new File("img/botelho.png"));
+		BufferedImage myPicture = ImageIO.read(new File(Gui.class.getResource("/main/resources/tsi/img/botelho.png").toURI()));
 		JLabel picLabel = new JLabel(new ImageIcon(myPicture));
 
 		botelho.add(picLabel);

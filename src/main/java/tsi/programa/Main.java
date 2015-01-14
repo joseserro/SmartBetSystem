@@ -1,7 +1,7 @@
-package programa;
+package main.java.tsi.programa;
 
-import gui.Gui;
-import tools.DatabaseConnection;
+import main.java.tsi.gui.Gui;
+import main.java.tsi.tools.DatabaseConnection;
 
 public class Main {	
 

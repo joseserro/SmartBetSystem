@@ -1,4 +1,4 @@
-package tools;
+package main.java.tsi.tools;
 import weka.core.Instances;
 import weka.core.converters.ArffSaver;
 import weka.core.converters.CSVLoader;

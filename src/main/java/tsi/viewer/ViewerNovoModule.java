@@ -1,4 +1,4 @@
-package viewer;
+package main.java.tsi.viewer;
 
 import org.opt4j.viewer.*;
 
@@ -12,24 +12,24 @@ import org.opt4j.viewer.Viewer.CloseEvent;
 
 
 /**
- * The {@link ViewerModule} configures the optimization process viewer.
+ * The {@link ViewerModule} configures the optimization process main.java.tsi.viewer.
  * 
  * @author lukasiewycz
  * 
  */
 @Icon(Icons.APPLICATION)
-@Info("A graphical viewer to observe the optimization process.")
+@Info("A graphical main.java.tsi.viewer to observe the optimization process.")
 public class ViewerNovoModule extends VisualizationModule {
 
-		@Info("The title of the viewer frame.")
+		@Info("The title of the main.java.tsi.viewer frame.")
 		@Constant(value = "title", namespace = ViewerNovo.class)
 		protected String title = "Opt4J " + Opt4J.getVersion() + " Viewer";
 
-		@Info("Event for the optimization process if the viewer is closed.")
+		@Info("Event for the optimization process if the main.java.tsi.viewer is closed.")
 		@Constant(value = "closeEvent", namespace = ViewerNovo.class)
 		protected CloseEvent closeEvent = CloseEvent.STOP;
 
-		@Info("Close viewer automatically when the optimization process stops.")
+		@Info("Close main.java.tsi.viewer automatically when the optimization process stops.")
 		@Constant(value = "closeOnStop", namespace = ViewerNovo.class)
 		protected boolean closeOnStop = false;
 

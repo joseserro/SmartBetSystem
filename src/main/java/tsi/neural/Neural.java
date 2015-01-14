@@ -1,9 +1,9 @@
-package neural;
+package main.java.tsi.neural;
 
 import java.io.File;
 import java.io.PrintWriter;
 
-import tools.DatabaseConnection;
+import main.java.tsi.tools.DatabaseConnection;
 import weka.classifiers.functions.MultilayerPerceptron;
 import weka.core.Instance;
 import weka.core.Instances;

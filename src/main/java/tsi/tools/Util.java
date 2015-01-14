@@ -1,4 +1,4 @@
-package tools;
+package main.java.tsi.tools;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;

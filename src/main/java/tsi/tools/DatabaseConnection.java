@@ -1,8 +1,9 @@
-package tools;
+package main.java.tsi.tools;
 import com.googlecode.jcsv.reader.CSVReader;
 import com.googlecode.jcsv.reader.internal.CSVReaderBuilder;
 
 import java.io.*;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.*;
 
@@ -21,14 +22,15 @@ public class DatabaseConnection {
 	public static void create(){
 		try {
 			//URI uri = DatabaseConnection.class.getResource("/db").toURI();
-			File folder = new File("db");
+			//File folder = new File("db");
+			File folder = new File(DatabaseConnection.class.getResource("/main/resources/tsi/db").toURI());
 			File[] listOfFiles = folder.listFiles();
 			anos = new String[listOfFiles.length];
 			for (int i = 0; i < listOfFiles.length; i++) {
 				System.out.println(listOfFiles[i].getName());
 				anos[i] = listOfFiles[i].getName().substring(0, 4);
 				//System.out.println(i+": "+listOfFiles[i].getName());
-				URL urlToText = System.class.getResource("/db/"+listOfFiles[i].getName());
+				URL urlToText = System.class.getResource("/main/resources/tsi/db/"+listOfFiles[i].getName());
 				InputStream is = urlToText.openStream();
 				Reader reader = new InputStreamReader(is);
 				//Reader reader = new FileReader("db/"+listOfFiles[i].getName());
@@ -38,15 +40,17 @@ public class DatabaseConnection {
 			}
 			
 			
-			itemsToAdd = CSVReaderBuilder.newDefaultReader(new InputStreamReader(DatabaseConnection.class.getResource("/knap/items.csv").openStream())).readAll();
-			equipas = CSVReaderBuilder.newDefaultReader(new InputStreamReader(DatabaseConnection.class.getResource("/knap/equipas.csv").openStream())).readAll();
-			sites = CSVReaderBuilder.newDefaultReader(new InputStreamReader(DatabaseConnection.class.getResource("/knap/sites.csv").openStream())).readAll();
-			neuralScores = CSVReaderBuilder.newDefaultReader(new InputStreamReader(DatabaseConnection.class.getResource("/knap/neural.csv").openStream())).readAll();
-			resultados = CSVReaderBuilder.newDefaultReader(new InputStreamReader(DatabaseConnection.class.getResource("/knap/resultados.csv").openStream())).readAll();
+			itemsToAdd = CSVReaderBuilder.newDefaultReader(new InputStreamReader(DatabaseConnection.class.getResource("/main/resources/tsi/knap/items.csv").openStream())).readAll();
+			equipas = CSVReaderBuilder.newDefaultReader(new InputStreamReader(DatabaseConnection.class.getResource("/main/resources/tsi/knap/equipas.csv").openStream())).readAll();
+			sites = CSVReaderBuilder.newDefaultReader(new InputStreamReader(DatabaseConnection.class.getResource("/main/resources/tsi/knap/sites.csv").openStream())).readAll();
+			neuralScores = CSVReaderBuilder.newDefaultReader(new InputStreamReader(DatabaseConnection.class.getResource("/main/resources/tsi/knap/neural.csv").openStream())).readAll();
+			resultados = CSVReaderBuilder.newDefaultReader(new InputStreamReader(DatabaseConnection.class.getResource("/main/resources/tsi/knap/resultados.csv").openStream())).readAll();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
-	}
+		} catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+    }
 	
 	public static List<String[]> getNeuralScores(){
 		return neuralScores;
@@ -323,7 +327,7 @@ public class DatabaseConnection {
 		conf[1] = (double)empates / (double)total; //empates
 		conf[2] = (double)derrotas / (double)total; //derrotas
 		
-		//garantir uma distribui��o credivel
+		//garantir uma distribuição credivel
 		if(conf[1]>=0.9){
 			double t = 1 - (conf[1]*0.2);
 			conf[0] = (t/2.0)*(1.0-(rand.nextDouble()/10.0));

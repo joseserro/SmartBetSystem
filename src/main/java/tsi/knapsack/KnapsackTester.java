@@ -1,6 +1,6 @@
-package knapsack;
+package main.java.tsi.knapsack;
 
-import gui.FrameApostas;
+import main.java.tsi.gui.FrameApostas;
 
 import java.util.List;
 
@@ -11,8 +11,8 @@ import org.opt4j.core.optimizer.Archive;
 import org.opt4j.core.start.Opt4JTask;
 import org.opt4j.optimizers.ea.EvolutionaryAlgorithmModule;
 
-import viewer.ViewerNovoModule;
-import tools.DatabaseConnection;
+import main.java.tsi.viewer.ViewerNovoModule;
+import main.java.tsi.tools.DatabaseConnection;
 
 public class KnapsackTester {
 	

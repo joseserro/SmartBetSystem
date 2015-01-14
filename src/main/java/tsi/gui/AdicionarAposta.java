@@ -1,19 +1,15 @@
-package gui;
+package main.java.tsi.gui;
 
+import main.java.tsi.tools.DatabaseConnection;
+import main.java.tsi.tools.Util;
+
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.swing.JFrame;
-import javax.swing.JComboBox;
-import javax.swing.JButton;
-import javax.swing.JOptionPane;
-
-import tools.DatabaseConnection;
-import tools.Util;
 
 public class AdicionarAposta extends JFrame {
 	
@@ -75,7 +71,7 @@ public class AdicionarAposta extends JFrame {
 				String home = ""+homeList.getSelectedItem();
 				String away = ""+awayList.getSelectedItem();
 				if(home.equals(away)){
-					JOptionPane.showMessageDialog(null, "Equipas escolhidas têm de ser diferentes!");
+					JOptionPane.showMessageDialog(null, "Equipas escolhidas tÃªm de ser diferentes!");
 					return;
 				}
 				

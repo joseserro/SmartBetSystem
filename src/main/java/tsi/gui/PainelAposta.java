@@ -1,26 +1,18 @@
-package gui;
+package main.java.tsi.gui;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Point;
+import main.java.tsi.tools.DatabaseConnection;
+import main.java.tsi.tools.Util;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-
-import javax.imageio.ImageIO;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-import javax.swing.border.EmptyBorder;
-
-import tools.DatabaseConnection;
-import tools.Util;
 
 public class PainelAposta extends JPanel {
 	private static final long serialVersionUID = 5808562856366879216L;
@@ -142,7 +134,7 @@ public class PainelAposta extends JPanel {
 	    String lucro = ""+Util.roundTo(valorAposta*odd - valorAposta,2);
 	    if(lucro.split("\\.")[1].length()==1)
 	    	lucro+="0";
-	   	lucro+="€";
+	   	lucro+="â‚¬";
 	    int distL = g.getFontMetrics().stringWidth(lucro);
 	    g.drawString(lucro, 526-distL, 23);
 	    
@@ -224,7 +216,7 @@ public class PainelAposta extends JPanel {
 				lblOdd.setBounds(66, 42, 24, 14);
 				contentPane.add(lblOdd);
 				
-				JLabel lblFactorConfiana = new JLabel("Factor confiança:");
+				JLabel lblFactorConfiana = new JLabel("Factor confianÃ§a:");
 				lblFactorConfiana.setBounds(162, 42, 84, 14);
 				contentPane.add(lblFactorConfiana);
 				

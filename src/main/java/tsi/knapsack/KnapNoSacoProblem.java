@@ -1,4 +1,4 @@
-package knapsack;
+package main.java.tsi.knapsack;
 
 
 import java.util.ArrayList;
@@ -10,8 +10,8 @@ import org.opt4j.benchmarks.knapsack.Knapsack;
 import org.opt4j.benchmarks.knapsack.KnapsackProblem;
 import org.opt4j.core.start.Constant;
 
-import tools.DatabaseConnection;
-import tools.Util;
+import main.java.tsi.tools.DatabaseConnection;
+import main.java.tsi.tools.Util;
 
 import com.google.inject.Inject;
 

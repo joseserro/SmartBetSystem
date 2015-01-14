@@ -1,24 +1,16 @@
-package viewer;
+package main.java.tsi.viewer;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JProgressBar;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-import javax.swing.border.TitledBorder;
-import javax.swing.plaf.basic.BasicProgressBarUI;
-
+import com.google.inject.Inject;
 import org.opt4j.core.config.visualization.DelayTask;
 import org.opt4j.core.optimizer.Optimizer;
 import org.opt4j.core.optimizer.OptimizerIterationListener;
 import org.opt4j.core.optimizer.OptimizerStateListener;
 import org.opt4j.core.start.Progress;
 
-import com.google.inject.Inject;
+import javax.swing.*;
+import javax.swing.border.TitledBorder;
+import javax.swing.plaf.basic.BasicProgressBarUI;
+import java.awt.*;
 
 /**
  * The {@link StatusBarNovo} contains informations about the optimization progress
@@ -139,6 +131,6 @@ public class StatusBarNovo implements OptimizerIterationListener, OptimizerState
 	 */
 	@Override
 	public void optimizationStopped(Optimizer optimizer) {
-		update("Iterações terminadas");
+		update("IteraÃ§Ãµes terminadas");
 	}
 }

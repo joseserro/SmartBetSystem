@@ -1,6 +1,6 @@
-package viewer;
+package main.java.tsi.viewer;
 
-import gui.Gui;
+import main.java.tsi.gui.Gui;
 
 import org.opt4j.core.optimizer.Control;
 import org.opt4j.core.optimizer.Optimizer;

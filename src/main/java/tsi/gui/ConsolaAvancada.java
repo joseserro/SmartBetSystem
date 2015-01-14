@@ -1,8 +1,8 @@
-package gui;
+package main.java.tsi.gui;
 
-import neural.Neural;
-import tools.DatabaseConnection;
-import tools.Util;
+import main.java.tsi.neural.Neural;
+import main.java.tsi.tools.DatabaseConnection;
+import main.java.tsi.tools.Util;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -17,7 +17,7 @@ import java.util.List;
 
 public class ConsolaAvancada {
 	
-	private static JFrame window = new JFrame("Consola Avan�ada");
+	private static JFrame window = new JFrame("Consola Avançada");
 	public static JComboBox<Object> homeList, awayList;
 	public static JSpinner it;
 	public static JTextArea out;
@@ -85,7 +85,7 @@ public class ConsolaAvancada {
 		
 		SpinnerNumberModel model1 = new SpinnerNumberModel(3.0, 1.0, 15.0, 1.0); 
 		it = new JSpinner(model1);
-		JButton calcular1 = new JButton("Factor de Confian�a");
+		JButton calcular1 = new JButton("Factor de Confiança");
 		JButton calcular2 = new JButton("Rede Neuronal");
 		JButton calc3 = new JButton("Apostas Liga");
 		destruir = new JButton("Destruir Rede Neuronal");
@@ -150,7 +150,7 @@ public class ConsolaAvancada {
 			List<String[]> resultados = DatabaseConnection.getResultados();
 			
 			JTextField oddField = new JTextField("20.00");
-			JLabel label = new JLabel("(Apostar �):");
+			JLabel label = new JLabel("(Apostar €):");
 			
 			String[] casas = new String[sites.size()+1];
 			casas[0] = "Todas";
@@ -177,14 +177,14 @@ public class ConsolaAvancada {
 			
 			double actual = init, perc = 0.35, valorTotalFinal = 0.0, melhorCarteira = 0.0, piorCarteira = 100000000.0, pico=0.0;
 			String melhorSite = "", piorSite = "";
-			outLn("Valor inicial: "+init+"� Percentagem a apostar: "+(perc*100)+"%");
+			outLn("Valor inicial: "+init+"€ Percentagem a apostar: "+(perc*100)+"%");
 			int acertosTotal=0, falhasTotal=0;
 			if(boxSites.getSelectedIndex()==0){
 				for(String[] linhaSite : sites){
 					int acertos=0,falhas=0;
 					actual = init;
 					int siteLP = Integer.parseInt(linhaSite[2]);
-					outLn("A iniciar simula��o de apostas para o site "+linhaSite[1]);
+					outLn("A iniciar simulação de apostas para o site "+linhaSite[1]);
 					int curItem = 0;
 					for(String[] linhaItem : items){
 						
@@ -242,10 +242,10 @@ public class ConsolaAvancada {
 							if(actual > pico){
 								pico = actual;
 							}
-							outLn(homeSig+"-"+awaySig+": Acertou "+sel+" ("+resultados.get(curItem)[0]+"-"+resultados.get(curItem)[1]+") Carteira: "+Util.roundTo(actual,2)+"�");
+							outLn(homeSig+"-"+awaySig+": Acertou "+sel+" ("+resultados.get(curItem)[0]+"-"+resultados.get(curItem)[1]+") Carteira: "+Util.roundTo(actual,2)+"€");
 						} else {
 							falhas++;
-							outLn(homeSig+"-"+awaySig+": Falhou "+sel+" ("+resultados.get(curItem)[0]+"-"+resultados.get(curItem)[1]+") Carteira: "+Util.roundTo(actual,2)+"�");
+							outLn(homeSig+"-"+awaySig+": Falhou "+sel+" ("+resultados.get(curItem)[0]+"-"+resultados.get(curItem)[1]+") Carteira: "+Util.roundTo(actual,2)+"€");
 						}
 						
 						curItem++;
@@ -268,7 +268,7 @@ public class ConsolaAvancada {
 				actual = init;
 				String[] linhaSite = sites.get(boxSites.getSelectedIndex()-1);
 				int siteLP = Integer.parseInt(linhaSite[2]);
-				outLn("A iniciar simula��o de apostas para o site "+linhaSite[1]);
+				outLn("A iniciar simulação de apostas para o site "+linhaSite[1]);
 				int curItem = 0;
 				for(String[] linhaItem : items){
 					
@@ -326,10 +326,10 @@ public class ConsolaAvancada {
 						if(actual > pico){
 							pico = actual;
 						}
-						outLn(homeSig+"-"+awaySig+": Acertou "+sel+" ("+resultados.get(curItem)[0]+"-"+resultados.get(curItem)[1]+") Carteira: "+Util.roundTo(actual,2)+"�");
+						outLn(homeSig+"-"+awaySig+": Acertou "+sel+" ("+resultados.get(curItem)[0]+"-"+resultados.get(curItem)[1]+") Carteira: "+Util.roundTo(actual,2)+"€");
 					} else {
 						falhas++;
-						outLn(homeSig+"-"+awaySig+": Falhou "+sel+" ("+resultados.get(curItem)[0]+"-"+resultados.get(curItem)[1]+") Carteira: "+Util.roundTo(actual,2)+"�");
+						outLn(homeSig+"-"+awaySig+": Falhou "+sel+" ("+resultados.get(curItem)[0]+"-"+resultados.get(curItem)[1]+") Carteira: "+Util.roundTo(actual,2)+"€");
 					}
 					
 					curItem++;
@@ -349,10 +349,10 @@ public class ConsolaAvancada {
 			
 			}
 			outLn("Resultado final: "+acertosTotal+"/"+(acertosTotal+falhasTotal)+" ("+Util.roundTo(((double)acertosTotal/((double)acertosTotal+(double)falhasTotal))*100,2)+"%)");
-			outLn(Util.roundTo(valorTotalFinal,2)+"� nas carteiras.");
-			outLn("Melhor carteira: "+melhorSite+" com "+Util.roundTo(melhorCarteira,2)+"�");
-			outLn("Pior carteira: "+piorSite+" com "+Util.roundTo(piorCarteira,2)+"�");
-			outLn("Pico: "+Util.roundTo(pico,2)+"�");
+			outLn(Util.roundTo(valorTotalFinal,2)+"€ nas carteiras.");
+			outLn("Melhor carteira: "+melhorSite+" com "+Util.roundTo(melhorCarteira,2)+"€");
+			outLn("Pior carteira: "+piorSite+" com "+Util.roundTo(piorCarteira,2)+"€");
+			outLn("Pico: "+Util.roundTo(pico,2)+"€");
 		}
 	}
 	
@@ -375,7 +375,7 @@ public class ConsolaAvancada {
 			String home = ""+homeList.getSelectedItem();
 			String away = ""+awayList.getSelectedItem();
 			if(home.equals(away)){
-				outLn("Equipas escolhidas t�m de ser diferentes!");
+				outLn("Equipas escolhidas têm de ser diferentes!");
 				return;
 			}
 			int round = ((Double)it.getModel().getValue()).intValue();
@@ -385,12 +385,12 @@ public class ConsolaAvancada {
 			} else {
 				conf = DatabaseConnection.getConfiancaRel(home, away);
 			}
-			outLn(home.toUpperCase()+" tem um factor de confian�a de");
+			outLn(home.toUpperCase()+" tem um factor de confiança de");
 			outLn("\t"+Util.roundTo(conf[0],round)+" que vai ganhar,");
 			outLn("\t"+Util.roundTo(conf[1],round)+" que vai empatar e");
 			outLn("\t"+Util.roundTo(conf[2],round)+" que vai perder contra o "+away.toUpperCase());
 			
-			outLn("Podemos concluir que h� maior chance de");
+			outLn("Podemos concluir que há maior chance de");
 			if(conf[0] > conf[1] && conf[0] > conf[2])
 				outLn(home.toUpperCase()+" ganhar ao "+away.toUpperCase());
 			if(conf[1] > conf[0] && conf[1] > conf[2])
@@ -416,7 +416,7 @@ public class ConsolaAvancada {
 	}
 	
 	public static void neuralType(){
-		JCheckBox demo = new JCheckBox("Modo Demonstra��o? (Avan�ado!)");
+		JCheckBox demo = new JCheckBox("Modo Demonstração? (Avançado!)");
 		int result = JOptionPane.showConfirmDialog(null, demo, 
 				"ANN Type", JOptionPane.OK_CANCEL_OPTION);
 		if (result == JOptionPane.OK_OPTION) {
@@ -455,7 +455,7 @@ public class ConsolaAvancada {
 		myPanel.add(lField);
 		myPanel.add(new JLabel("Momentum:"));
 		myPanel.add(mField);
-		myPanel.add(new JLabel("Itera�oes:"));
+		myPanel.add(new JLabel("Iteraçoes:"));
 		myPanel.add(nField);
 		myPanel.add(new JLabel("Validation:"));
 		myPanel.add(vField);
@@ -467,7 +467,7 @@ public class ConsolaAvancada {
 		myPanel.add(hField);
 
 		int result = JOptionPane.showConfirmDialog(null, myPanel, 
-				"Configura��o Rede Neuronal", JOptionPane.OK_CANCEL_OPTION);
+				"Configuração Rede Neuronal", JOptionPane.OK_CANCEL_OPTION);
 		if (result == JOptionPane.OK_OPTION) {
 			return "-L "+lField.getText()+" -M "+mField.getText()+" -N "+nField.getText()+" -V "+vField.getText()+
 					" -S "+sField.getText()+" -E "+eField.getText()+" -H "+hField.getText();
@@ -501,7 +501,7 @@ public class ConsolaAvancada {
 //			ann.setTestingEnv(inst);
 			double prev = ann.testForOdds(inst);
 			
-			outLn("Resultado (Previs�o: "+Util.roundTo(prev,3)+")");
+			outLn("Resultado (Previsão: "+Util.roundTo(prev,3)+")");
 			if(prev > 0.18){
 				//home win
 				outLn("Casa Ganha");
