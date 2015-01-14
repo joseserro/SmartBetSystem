@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="EclipseModuleManager">
+    <libelement value="jar://$MODULE_DIR$/jcsv-1.4.0.jar!/" />
+    <libelement value="jar://C:/Program Files/Weka-3-6/weka-src.jar!/" />
+    <libelement value="jar://C:/Program Files/Weka-3-6/weka.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/opt4j-3.1.jar!/" />
+    <src_description expected_position="0">
+      <src_folder value="file://$MODULE_DIR$/src" expected_position="0" />
+    </src_description>
+  </component>
+  <component name="NewModuleRootManager" inherit-compiler-output="false">
+    <output url="file://$MODULE_DIR$/bin" />
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+    </content>
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="module-library">
+      <library name="jcsv-1.4.0.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/jcsv-1.4.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="weka-src.jar">
+        <CLASSES>
+          <root url="jar://C:/Program Files/Weka-3-6/weka-src.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="weka.jar">
+        <CLASSES>
+          <root url="jar://C:/Program Files/Weka-3-6/weka.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://C:/Program Files/Weka-3-6/weka-src.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="opt4j-3.1.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/opt4j-3.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+  </component>
+</module>
+
