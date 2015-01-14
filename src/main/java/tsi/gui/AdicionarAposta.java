@@ -19,7 +19,8 @@ public class AdicionarAposta extends JFrame {
 	private JFrame me;
 	
 	public AdicionarAposta() {
-		me = this;
+        System.out.println("A adicionar aposta... weka");
+        me = this;
 		setTitle("Adicionar Aposta");
 		setSize(380,70);
 		setLocation((int)(Gui.scrSize.getWidth()/4)+440, (int)(Gui.scrSize.getHeight()/2)-200);
