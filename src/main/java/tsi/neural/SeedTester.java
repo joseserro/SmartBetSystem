@@ -26,7 +26,7 @@ public class SeedTester {
 					
 					for(int i=ac*seedsPerCore; i < (ac+1)*seedsPerCore; i++){
 						long time1 = System.currentTimeMillis();
-						Neural ann = new Neural("neuralknap");
+						Neural ann = new Neural("neuralknap", false);
 						ann.loadData();
 						ann.configure("-L 0.3 -M 0.2 -N 200 -V 0 -S "+i+" -E 20 -H 3,6,4");
 						ann.buildPerceptron();

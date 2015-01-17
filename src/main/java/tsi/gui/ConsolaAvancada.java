@@ -29,7 +29,6 @@ public class ConsolaAvancada {
 	}
 	
 	public ConsolaAvancada(){
-        Gui.eh();
 		window.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		window.addWindowListener(new WindowListener() {
 			@Override
@@ -478,7 +477,7 @@ public class ConsolaAvancada {
 	public static void neuralNetwork(boolean demo){
 		Neural ann=null;
 		if(builtAnn==null){
-			ann = new Neural("neuralknap");
+			ann = new Neural("neuralknap",false);
 			
 			outLn("A carregar base de dados.");
 			ann.loadData();
