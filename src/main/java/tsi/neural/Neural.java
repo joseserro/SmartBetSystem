@@ -7,6 +7,8 @@ import weka.core.converters.CSVLoader;
 import weka.core.converters.ConverterUtils.DataSource;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +31,6 @@ public class Neural {
     private List<Instances> testSetList = new ArrayList<>();
     private List<MultilayerPerceptron> perceptronList = new ArrayList<>();
 
-    public List<Double[]> classLabelsList = new ArrayList<>();
     public List<Double[]> predictedLabelsList = new ArrayList<>();
 
     private String folder;
@@ -81,11 +82,10 @@ public class Neural {
 
     public void clear() {
         numTestingInstances = 0;
+        classLabels = null;
         if(useMultiple){
-            classLabelsList.clear();
             predictedLabelsList.clear();
         } else {
-            classLabels = null;
             predictedLabels = null;
         }
     }
@@ -171,10 +171,6 @@ public class Neural {
         return predictedLabels;
     }
 
-    public List<Double[]> getClassLabelsList() {
-        return classLabelsList;
-    }
-
     public List<Double[]> getPredictedLabelsList() {
         return predictedLabelsList;
     }
@@ -188,7 +184,7 @@ public class Neural {
                     Instances testSet = testSetList.get(b);
                     perceptronList.get(b).buildClassifier(trainSet);
                     numTestingInstances = testSet.numInstances();
-                    classLabelsList.add(new Double[numTestingInstances]);
+                    classLabels = new double[numTestingInstances];
                     predictedLabelsList.add(new Double[numTestingInstances]);
                 }
             } else {
@@ -216,7 +212,7 @@ public class Neural {
                     for (int cnt = 0; cnt < numTestingInstances; cnt++) {
                         Instance currInstance = testSet.instance(cnt);
                         double[] distForInstance = perceptronList.get(b).distributionForInstance(currInstance);
-                        classLabelsList.get(b)[cnt] = currInstance.value(classIdx);
+                        classLabels[cnt] = currInstance.value(classIdx);
                         predictedLabelsList.get(b)[cnt] = distForInstance[0];
                     }
                 }
@@ -238,6 +234,18 @@ public class Neural {
         return useMultiple;
     }
 
+    private String[] breakOdds(String odds){
+        String[] brokenOdds = {"","",""};
+        String[] splitOdds = odds.split(", ");
+        int place = 0;
+        for(int b = 1; b < splitOdds.length; b++){
+            brokenOdds[place] += ", "+ splitOdds[b];
+            place++;
+            if(place>2) place=0;
+        }
+        return brokenOdds;
+    }
+
     public double[] testForOddsMultiple(String odds){
         double[] finalOdds = new double[MULTIPLE_SIZE];
         String[] headers = {
@@ -245,14 +253,22 @@ public class Neural {
                 "SIGN, B365D, BWD, IWD, LBD, PSD, WHD, SJD, VCD",
                 "SIGN, B365A, BWA, IWA, LBA, PSA, WHA, SJA, VCA"
         };
+        String[] brokenInputOdds = breakOdds(odds);
         try {
             for(int b = 0; b < MULTIPLE_SIZE; b++){
                 String header = headers[b];
-                PrintWriter writer = new PrintWriter("/main/resources/tsi/" + folder + "/temp"+b+".csv", "UTF-8");
+                File tempFile = new File("C:/aa_temp"+b+".csv");
+                if(!tempFile.exists()) {
+                    tempFile.createNewFile();
+                    tempFile.deleteOnExit();
+                }
+                PrintWriter writer = new PrintWriter("C:/aa_temp"+b+".csv", "UTF-8");
                 writer.println(header);
-                writer.println(odds);
+                writer.println(brokenInputOdds[b]);
                 writer.close();
-                DataSource tempSource = new DataSource(Neural.class.getResource("/main/resources/tsi/" + folder + "/temp"+b+".csv").openStream());
+                InputStream inputStream = new FileInputStream(tempFile);
+                DataSource tempSource = new DataSource("C:/aa_temp"+b+".csv");
+                //DataSource tempSource = new DataSource(Neural.class.getResource("/main/resources/tsi/" + folder + "/temp"+b+".csv").openStream());
                 Instances tempSet = tempSource.getDataSet(0);
                 Instance currInstance = tempSet.instance(0);
                 double[] distForInstance = perceptronList.get(b).distributionForInstance(currInstance);

@@ -477,7 +477,7 @@ public class ConsolaAvancada {
 	public static void neuralNetwork(boolean demo){
 		Neural ann=null;
 		if(builtAnn==null){
-			ann = new Neural("neuralknap",false);
+			ann = new Neural("neuralknap",true); //mudar para false para o modo antigo (apenas 1 rn)
 			
 			outLn("A carregar base de dados.");
 			ann.loadData();
@@ -498,8 +498,21 @@ public class ConsolaAvancada {
 		if(!demo){
 			String inst = queryNewInstance();
 //			ann.setTestingEnv(inst);
-			double prev = ann.testForOdds(inst);
-			
+			double[] prevList = ann.testForOddsMultiple(inst); //mudar para testForOdds no modo 1rn
+
+            double prevH = prevList[0];
+            double prevD = prevList[1];
+            double prevA = prevList[2];
+
+            outLn("Resultado (H: "+prevH+", D: "+prevD+", A: "+prevA+")");
+
+            /*int bestPrev = -1;
+            double bestPrev = 0.0;
+            if()
+            outLn()
+            */
+
+            /*
 			outLn("Resultado (Previsão: "+Util.roundTo(prev,3)+")");
 			if(prev > 0.18){
 				//home win
@@ -510,30 +523,46 @@ public class ConsolaAvancada {
 			} else {
 				//draw
 				outLn("Empate");
-			}
+			}*/
 		} else {
 			ann.getTestSetValues();
 			
 			int numTestingInstances = ann.getNumTestingInstances();
-			double[] classLabels = ann.getClassLabels();
-			double[] predictedLabels = ann.getPredictedLabels();
-			outLn("");
+            double[] classLabels = ann.getClassLabels();
+            if(ann.getUseMultiple()){
+                List<Double[]> predictedLabelsList = ann.getPredictedLabelsList();
+                outLn("");
+                outLn("Resultados");
+                for (int i = 0; i < numTestingInstances; i++) {
+                    String out = "SIGN: " + classLabels[i];
+                    out += "\tH:";
+                    out += "\t" + predictedLabelsList.get(0)[i];
+                    out += "\tD:";
+                    out += "\t" + predictedLabelsList.get(1)[i];
+                    out += "\tA:";
+                    out += "\t" + predictedLabelsList.get(2)[i];
+                    outLn(out);
+                }
+            } else {
+                double[] predictedLabels = ann.getPredictedLabels();
+                outLn("");
 
-			outLn("Resultados");
-			outLn("Actual\tPrevisto\tThreshold\tAcertou?");
-			int certos = 0;
-			for(int i=0; i<numTestingInstances;i++){
-				double threshold=0.0;
-				if(predictedLabels[i] > 0.18)
-					threshold = 1.0;
-				if(predictedLabels[i] < -0.18)
-					threshold = -1.0;
-				if(threshold==classLabels[i])
-					certos++;
-				outLn(classLabels[i]+"\t"+Util.roundTo(predictedLabels[i],3)+"\t"+threshold+"\t"+(threshold==classLabels[i]));
-			}
-			double perc = Util.roundTo(((double)certos)/((double)numTestingInstances) * 100, 2);
-			outLn("Certos: "+certos+" em "+numTestingInstances+" ("+(perc)+"%)");
+                outLn("Resultados");
+                outLn("Actual\tPrevisto\tThreshold\tAcertou?");
+                int certos = 0;
+                for (int i = 0; i < numTestingInstances; i++) {
+                    double threshold = 0.0;
+                    if (predictedLabels[i] > 0.18)
+                        threshold = 1.0;
+                    if (predictedLabels[i] < -0.18)
+                        threshold = -1.0;
+                    if (threshold == classLabels[i])
+                        certos++;
+                    outLn(classLabels[i] + "\t" + Util.roundTo(predictedLabels[i], 3) + "\t" + threshold + "\t" + (threshold == classLabels[i]));
+                }
+                double perc = Util.roundTo(((double) certos) / ((double) numTestingInstances) * 100, 2);
+                outLn("Certos: " + certos + " em " + numTestingInstances + " (" + (perc) + "%)");
+            }
 		}
 //		ann.clear();
 	}
