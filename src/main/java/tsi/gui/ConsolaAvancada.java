@@ -449,6 +449,8 @@ public class ConsolaAvancada {
 		JTextField eField = new JTextField("20");
 		JTextField hField = new JTextField("3,6,4");
 
+        JCheckBox guiCheckBox = new JCheckBox();
+
 		JPanel myPanel = new JPanel();
 		myPanel.add(new JLabel("Learning:"));
 		myPanel.add(lField);
@@ -464,12 +466,18 @@ public class ConsolaAvancada {
 		myPanel.add(eField);
 		myPanel.add(new JLabel("HLayers:"));
 		myPanel.add(hField);
+        myPanel.add(new JLabel("GUI:"));
+        myPanel.add(guiCheckBox);
+
 
 		int result = JOptionPane.showConfirmDialog(null, myPanel, 
 				"Configuração Rede Neuronal", JOptionPane.OK_CANCEL_OPTION);
 		if (result == JOptionPane.OK_OPTION) {
-			return "-L "+lField.getText()+" -M "+mField.getText()+" -N "+nField.getText()+" -V "+vField.getText()+
-					" -S "+sField.getText()+" -E "+eField.getText()+" -H "+hField.getText();
+            String ret = "-L "+lField.getText()+" -M "+mField.getText()+" -N "+nField.getText()+" -V "+vField.getText()+
+                    " -S "+sField.getText()+" -E "+eField.getText()+" -H "+hField.getText();
+			if(guiCheckBox.isSelected())
+                ret += " -G";
+            return ret;
 		}
 		return "-L 0.3 -M 0.2 -N 200 -V 0 -S 971 -E 20 -H 3,6,4"; //default values
 	}
@@ -528,23 +536,65 @@ public class ConsolaAvancada {
 			ann.getTestSetValues();
 			
 			int numTestingInstances = ann.getNumTestingInstances();
-            double[] classLabels = ann.getClassLabels();
+
             if(ann.getUseMultiple()){
                 List<Double[]> predictedLabelsList = ann.getPredictedLabelsList();
+                List<Double[]> classLabelsList = ann.getClassLabelsList();
                 outLn("");
                 outLn("Resultados");
+                outLn("HOMESIGN\tHOME\tDRAWSIGN\tDRAW\tAWAYSIGN\tAWAY\tCLOSEST\tWIN");
+                int wins = 0;
                 for (int i = 0; i < numTestingInstances; i++) {
-                    String out = "SIGN: " + classLabels[i];
-                    out += "\tH:";
-                    out += "\t" + predictedLabelsList.get(0)[i];
-                    out += "\tD:";
-                    out += "\t" + predictedLabelsList.get(1)[i];
-                    out += "\tA:";
-                    out += "\t" + predictedLabelsList.get(2)[i];
+                    double home = predictedLabelsList.get(0)[i];
+                    double draw = predictedLabelsList.get(1)[i];
+                    double away = predictedLabelsList.get(2)[i];
+
+                    double homeSign = classLabelsList.get(0)[i];
+                    double drawSign = classLabelsList.get(1)[i];
+                    double awaySign = classLabelsList.get(2)[i];
+
+                    double homeAbs = Math.abs(home);
+                    double drawAbs = Math.abs(draw);
+                    double awayAbs = Math.abs(away);
+
+                    double closestIdx = 0;
+                    double closest = homeAbs;
+                    if(drawAbs < closest) {
+                        closest = drawAbs;
+                        closestIdx = 1;
+                    }
+                    if(awayAbs < closest) {
+                        closest = awayAbs;
+                        closestIdx = 2;
+                    }
+
+                    boolean win = ((closestIdx-1.0)*-1.0) == -2;
+                    if(win)
+                        wins++;
+
+                    String out = "" + homeSign;
+                    out += "\t" + home;
+                    out += "\t" + drawSign;
+                    out += "\t" + draw;
+                    out += "\t" + awaySign;
+                    out += "\t" + away;
+                    out += "\t" + closest;
+                    out += "\t" + win;
                     outLn(out);
+
                 }
+                outLn("FINAL RESULTS:");
+                outLn("TOTAL\tWINS\tLOSSES\t%WINS");
+                int losses = numTestingInstances - wins;
+                double perc = ((double)wins/(double)numTestingInstances)*100;
+                outLn(numTestingInstances + "\t" +
+                    wins + "\t" +
+                    losses + "\t" +
+                    perc);
+
             } else {
                 double[] predictedLabels = ann.getPredictedLabels();
+                double[] classLabels = ann.getClassLabels();
                 outLn("");
 
                 outLn("Resultados");

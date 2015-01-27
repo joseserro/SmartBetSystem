@@ -17,6 +17,7 @@ public class Neural {
 
     private Boolean useMultiple;
     private static final Integer MULTIPLE_SIZE = 3; //para esta rede neuronal em especifico
+    private static final String FILENAME_APPEND = "2"; //leave "" for regular sign
 
     public int numTestingInstances;
 
@@ -32,6 +33,7 @@ public class Neural {
     private List<MultilayerPerceptron> perceptronList = new ArrayList<>();
 
     public List<Double[]> predictedLabelsList = new ArrayList<>();
+    public List<Double[]> classLabelsList = new ArrayList<>();
 
     private String folder;
 
@@ -51,8 +53,8 @@ public class Neural {
                 for (String str : loaders) {
                     CSVLoader trainLoader = new CSVLoader();
                     CSVLoader testLoader = new CSVLoader();
-                    trainLoader.setSource(new File(Neural.class.getResource("/main/resources/tsi/" + folder + "/train" + str + ".csv").toURI()));
-                    testLoader.setSource(new File(Neural.class.getResource("/main/resources/tsi/" + folder + "/test" + str + ".csv").toURI()));
+                    trainLoader.setSource(new File(Neural.class.getResource("/main/resources/tsi/" + folder + "/train" + str + FILENAME_APPEND +".csv").toURI()));
+                    testLoader.setSource(new File(Neural.class.getResource("/main/resources/tsi/" + folder + "/test" + str + FILENAME_APPEND + ".csv").toURI()));
 
                     Instances trainSet = trainLoader.getDataSet();
                     trainSet.setClassIndex(0);
@@ -82,11 +84,12 @@ public class Neural {
 
     public void clear() {
         numTestingInstances = 0;
-        classLabels = null;
         if(useMultiple){
             predictedLabelsList.clear();
+            classLabelsList.clear();
         } else {
             predictedLabels = null;
+            classLabels = null;
         }
     }
 
@@ -167,6 +170,10 @@ public class Neural {
         return classLabels;
     }
 
+    public List<Double[]> getClassLabelsList() {
+        return classLabelsList;
+    }
+
     public double[] getPredictedLabels() {
         return predictedLabels;
     }
@@ -184,8 +191,8 @@ public class Neural {
                     Instances testSet = testSetList.get(b);
                     perceptronList.get(b).buildClassifier(trainSet);
                     numTestingInstances = testSet.numInstances();
-                    classLabels = new double[numTestingInstances];
                     predictedLabelsList.add(new Double[numTestingInstances]);
+                    classLabelsList.add(new Double[numTestingInstances]);
                 }
             } else {
                 percep.buildClassifier(trainSet);
@@ -212,7 +219,7 @@ public class Neural {
                     for (int cnt = 0; cnt < numTestingInstances; cnt++) {
                         Instance currInstance = testSet.instance(cnt);
                         double[] distForInstance = perceptronList.get(b).distributionForInstance(currInstance);
-                        classLabels[cnt] = currInstance.value(classIdx);
+                        classLabelsList.get(b)[cnt] = currInstance.value(classIdx);
                         predictedLabelsList.get(b)[cnt] = distForInstance[0];
                     }
                 }
@@ -259,8 +266,8 @@ public class Neural {
                 String header = headers[b];
                 File tempFile = new File("C:/aa_temp"+b+".csv");
                 if(!tempFile.exists()) {
-                    tempFile.createNewFile();
-                    tempFile.deleteOnExit();
+                    if(tempFile.createNewFile())
+                        tempFile.deleteOnExit();
                 }
                 PrintWriter writer = new PrintWriter("C:/aa_temp"+b+".csv", "UTF-8");
                 writer.println(header);
