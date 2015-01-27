@@ -17,7 +17,7 @@ public class Neural {
 
     private Boolean useMultiple;
     private static final Integer MULTIPLE_SIZE = 3; //para esta rede neuronal em especifico
-    private static final String FILENAME_APPEND = "2"; //leave "" for regular sign
+    private static final String FILENAME_APPEND = ""; //leave "" for regular sign
 
     public int numTestingInstances;
 
@@ -192,7 +192,8 @@ public class Neural {
                     perceptronList.get(b).buildClassifier(trainSet);
                     numTestingInstances = testSet.numInstances();
                     predictedLabelsList.add(new Double[numTestingInstances]);
-                    classLabelsList.add(new Double[numTestingInstances]);
+                    classLabels = new double[numTestingInstances];
+                    //classLabelsList.add(new Double[numTestingInstances]);
                 }
             } else {
                 percep.buildClassifier(trainSet);
@@ -219,7 +220,8 @@ public class Neural {
                     for (int cnt = 0; cnt < numTestingInstances; cnt++) {
                         Instance currInstance = testSet.instance(cnt);
                         double[] distForInstance = perceptronList.get(b).distributionForInstance(currInstance);
-                        classLabelsList.get(b)[cnt] = currInstance.value(classIdx);
+                        //classLabelsList.get(b)[cnt] = currInstance.value(classIdx);
+                        classLabels[cnt] = currInstance.value(classIdx);
                         predictedLabelsList.get(b)[cnt] = distForInstance[0];
                     }
                 }

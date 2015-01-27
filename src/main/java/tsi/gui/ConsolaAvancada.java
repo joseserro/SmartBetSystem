@@ -534,6 +534,7 @@ public class ConsolaAvancada {
                 }
             }
 		} else {
+            /*
 			ann.getTestSetValues();
 			
 			int numTestingInstances = ann.getNumTestingInstances();
@@ -592,10 +593,63 @@ public class ConsolaAvancada {
                     wins + "\t" +
                     losses + "\t" +
                     perc);
+            */
+            ann.getTestSetValues();
 
+            int numTestingInstances = ann.getNumTestingInstances();
+            double[] classLabels = ann.getClassLabels();
+            if(ann.getUseMultiple()){
+                List<Double[]> predictedLabelsList = ann.getPredictedLabelsList();
+                int wins = 0;
+                outLn("");
+                outLn("Resultados");
+                outLn("SIGN\tHOME\tDRAW\tAWAY\tCLOSEST\tWIN");
+                for (int i = 0; i < numTestingInstances; i++) {
+
+                    double sign = classLabels[i];
+
+                    double home = predictedLabelsList.get(0)[i];
+                    double draw = predictedLabelsList.get(1)[i];
+                    double away = predictedLabelsList.get(2)[i];
+
+                    double homeAbs = Math.abs(home);
+                    double drawAbs = Math.abs(draw);
+                    double awayAbs = Math.abs(away);
+
+                    double closestIdx = 0;
+                    double closest = homeAbs;
+                    if(drawAbs < closest) {
+                        closest = drawAbs;
+                        closestIdx = 1;
+                    }
+                    if(awayAbs < closest) {
+                        closest = awayAbs;
+                        closestIdx = 2;
+                    }
+
+                    boolean win = ((closestIdx-1)*-1) == sign;
+
+                    if(win)
+                        wins++;
+
+                    String out = "" + sign;
+                    out += "\t" + home;
+                    out += "\t" + draw;
+                    out += "\t" + away;
+                    out += "\t" + closest;
+                    out += "\t" + win;
+                    outLn(out);
+                }
+                outLn("FINAL RESULTS:");
+                outLn("TOTAL\tWINS\tLOSSES\t%WINS");
+                int losses = numTestingInstances - wins;
+                double perc = ((double)wins/(double)numTestingInstances)*100;
+                outLn(numTestingInstances + "\t" +
+                        wins + "\t" +
+                        losses + "\t" +
+                        perc);
             } else {
                 double[] predictedLabels = ann.getPredictedLabels();
-                double[] classLabels = ann.getClassLabels();
                 outLn("");
 
                 outLn("Resultados");
