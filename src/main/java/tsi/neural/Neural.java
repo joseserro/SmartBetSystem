@@ -298,8 +298,7 @@ public class Neural {
             Instances tempSet = tempSource.getDataSet(0);
             Instance currInstance = tempSet.instance(0);
             double[] distForInstance = percep.distributionForInstance(currInstance);
-            double oioi = distForInstance[0];
-            return oioi;
+            return distForInstance[0];
         } catch (Exception e) {
             e.printStackTrace();
         }

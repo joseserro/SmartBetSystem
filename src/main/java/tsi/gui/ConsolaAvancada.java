@@ -415,13 +415,15 @@ public class ConsolaAvancada {
 	}
 	
 	public static void neuralType(){
-		JCheckBox demo = new JCheckBox("Modo Demonstração? (Avançado!)");
-		int result = JOptionPane.showConfirmDialog(null, demo, 
+        JPanel panel = new JPanel();
+		JCheckBox demo = new JCheckBox("Demo: ");
+		JCheckBox mult = new JCheckBox("Multple ANN: ");
+        panel.add(demo);
+        panel.add(mult);
+		int result = JOptionPane.showConfirmDialog(null, panel,
 				"ANN Type", JOptionPane.OK_CANCEL_OPTION);
 		if (result == JOptionPane.OK_OPTION) {
-			neuralNetwork(demo.isSelected());
-		} else {
-			return;
+			neuralNetwork(demo.isSelected(), mult.isSelected());
 		}
 	}
 	
@@ -482,10 +484,10 @@ public class ConsolaAvancada {
 		return "-L 0.3 -M 0.2 -N 200 -V 0 -S 971 -E 20 -H 3,6,4"; //default values
 	}
 	
-	public static void neuralNetwork(boolean demo){
+	public static void neuralNetwork(boolean demo, boolean mult){
 		Neural ann=null;
 		if(builtAnn==null){
-			ann = new Neural("neuralknap",true); //mudar para false para o modo antigo (apenas 1 rn)
+			ann = new Neural("neuralknap",mult); //mudar para false para o modo antigo (apenas 1 rn)
 			
 			outLn("A carregar base de dados.");
 			ann.loadData();
@@ -506,32 +508,31 @@ public class ConsolaAvancada {
 		if(!demo){
 			String inst = queryNewInstance();
 //			ann.setTestingEnv(inst);
-			double[] prevList = ann.testForOddsMultiple(inst); //mudar para testForOdds no modo 1rn
+            if(mult) {
+                double[] prevList = ann.testForOddsMultiple(inst);
 
-            double prevH = prevList[0];
-            double prevD = prevList[1];
-            double prevA = prevList[2];
+                double prevH = prevList[0];
+                double prevD = prevList[1];
+                double prevA = prevList[2];
 
-            outLn("Resultado (H: "+prevH+", D: "+prevD+", A: "+prevA+")");
+                outLn("Resultado (H: " + prevH + ", D: " + prevD + ", A: " + prevA + ")");
 
-            /*int bestPrev = -1;
-            double bestPrev = 0.0;
-            if()
-            outLn()
-            */
 
-            /*
-			outLn("Resultado (Previsão: "+Util.roundTo(prev,3)+")");
-			if(prev > 0.18){
-				//home win
-				outLn("Casa Ganha");
-			} else if(prev < -0.18){
-				//away win
-				outLn("Equipa Convidada Ganha");
-			} else {
-				//draw
-				outLn("Empate");
-			}*/
+            } else { //old method, ugly
+                double prev = ann.testForOdds(inst);
+
+                outLn("Resultado (Previsão: "+Util.roundTo(prev,3)+")");
+                if(prev > 0.18){
+                    //home win
+                    outLn("Casa Ganha");
+                } else if(prev < -0.18){
+                    //away win
+                    outLn("Equipa Convidada Ganha");
+                } else {
+                    //draw
+                    outLn("Empate");
+                }
+            }
 		} else {
 			ann.getTestSetValues();
 			
