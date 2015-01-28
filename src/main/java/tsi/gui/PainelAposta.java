@@ -24,11 +24,10 @@ public class PainelAposta extends JPanel {
 	
 	{
 		try {
-			delImg = ImageIO.read(new File(PainelAposta.class.getResource("/main/resources/tsi/img/del.png").toURI()));
+			delImg = ImageIO.read(PainelAposta.class.getResourceAsStream("/main/resources/tsi/img/del.png"));
 			//delImg = ImageIO.read(new File("img/del.png"));
 		} catch (IOException e) {
-		} catch (URISyntaxException e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
     }
 	public enum TipoAposta {

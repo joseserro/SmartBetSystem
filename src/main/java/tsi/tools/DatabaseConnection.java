@@ -3,13 +3,11 @@ import com.googlecode.jcsv.reader.CSVReader;
 import com.googlecode.jcsv.reader.internal.CSVReaderBuilder;
 
 import java.io.*;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.*;
 
 
 public class DatabaseConnection {
-	
+
 	public static String[] anos;
 	private static ArrayList<List<String[]>> db = new ArrayList<List<String[]>>();
 	private static HashMap<String,HashMap<String,double[]>> confiancas = new HashMap<String,HashMap<String,double[]>>();
@@ -23,33 +21,36 @@ public class DatabaseConnection {
 		try {
 			//URI uri = DatabaseConnection.class.getResource("/db").toURI();
 			//File folder = new File("db");
-			File folder = new File(DatabaseConnection.class.getResource("/main/resources/tsi/db").toURI());
-			File[] listOfFiles = folder.listFiles();
-			anos = new String[listOfFiles.length];
-			for (int i = 0; i < listOfFiles.length; i++) {
-				System.out.println(listOfFiles[i].getName());
-				anos[i] = listOfFiles[i].getName().substring(0, 4);
-				//System.out.println(i+": "+listOfFiles[i].getName());
-				URL urlToText = System.class.getResource("/main/resources/tsi/db/"+listOfFiles[i].getName());
-				InputStream is = urlToText.openStream();
-				Reader reader = new InputStreamReader(is);
-				//Reader reader = new FileReader("db/"+listOfFiles[i].getName());
-				CSVReader<String[]> csvParser = CSVReaderBuilder.newDefaultReader(reader);
-				List<String[]> data = csvParser.readAll();
-				db.add(data);
-			}
+            InputStream listInputStream = DatabaseConnection.class.getResourceAsStream("/main/resources/tsi/db/list.txt");
+            BufferedReader listReader = new BufferedReader(new InputStreamReader(listInputStream));
+
+            Map<String,InputStream> inputStreamMap = new HashMap<>();
+            String name;
+            while ((name = listReader.readLine()) != null) {
+                inputStreamMap.put(name, DatabaseConnection.class.getResourceAsStream("/main/resources/tsi/db/" + name));
+            }
+
+			anos = new String[inputStreamMap.size()];
+            int idx = 0;
+            for (Map.Entry<String, InputStream> entry : inputStreamMap.entrySet()){
+                InputStream is = entry.getValue();
+                String fName = entry.getKey();
+                anos[idx] = fName.substring(0, 4);
+                idx++;
+                Reader reader = new InputStreamReader(is);
+                CSVReader<String[]> csvParser = CSVReaderBuilder.newDefaultReader(reader);
+                List<String[]> data = csvParser.readAll();
+                db.add(data);
+            }
 			
-			
-			itemsToAdd = CSVReaderBuilder.newDefaultReader(new InputStreamReader(DatabaseConnection.class.getResource("/main/resources/tsi/knap/items.csv").openStream())).readAll();
-			equipas = CSVReaderBuilder.newDefaultReader(new InputStreamReader(DatabaseConnection.class.getResource("/main/resources/tsi/knap/equipas.csv").openStream())).readAll();
-			sites = CSVReaderBuilder.newDefaultReader(new InputStreamReader(DatabaseConnection.class.getResource("/main/resources/tsi/knap/sites.csv").openStream())).readAll();
-			neuralScores = CSVReaderBuilder.newDefaultReader(new InputStreamReader(DatabaseConnection.class.getResource("/main/resources/tsi/knap/neural.csv").openStream())).readAll();
-			resultados = CSVReaderBuilder.newDefaultReader(new InputStreamReader(DatabaseConnection.class.getResource("/main/resources/tsi/knap/resultados.csv").openStream())).readAll();
+			itemsToAdd = CSVReaderBuilder.newDefaultReader(new InputStreamReader(DatabaseConnection.class.getResourceAsStream("/main/resources/tsi/knap/items.csv"))).readAll();
+			equipas = CSVReaderBuilder.newDefaultReader(new InputStreamReader(DatabaseConnection.class.getResourceAsStream("/main/resources/tsi/knap/equipas.csv"))).readAll();
+			sites = CSVReaderBuilder.newDefaultReader(new InputStreamReader(DatabaseConnection.class.getResourceAsStream("/main/resources/tsi/knap/sites.csv"))).readAll();
+			neuralScores = CSVReaderBuilder.newDefaultReader(new InputStreamReader(DatabaseConnection.class.getResourceAsStream("/main/resources/tsi/knap/neural.csv"))).readAll();
+			resultados = CSVReaderBuilder.newDefaultReader(new InputStreamReader(DatabaseConnection.class.getResourceAsStream("/main/resources/tsi/knap/resultados.csv"))).readAll();
 		} catch (IOException e) {
 			e.printStackTrace();
-		} catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
+		}
     }
 	
 	public static List<String[]> getNeuralScores(){

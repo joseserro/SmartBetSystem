@@ -53,8 +53,8 @@ public class Neural {
                 for (String str : loaders) {
                     CSVLoader trainLoader = new CSVLoader();
                     CSVLoader testLoader = new CSVLoader();
-                    trainLoader.setSource(new File(Neural.class.getResource("/main/resources/tsi/" + folder + "/train" + str + FILENAME_APPEND +".csv").toURI()));
-                    testLoader.setSource(new File(Neural.class.getResource("/main/resources/tsi/" + folder + "/test" + str + FILENAME_APPEND + ".csv").toURI()));
+                    trainLoader.setSource(Neural.class.getResourceAsStream("/main/resources/tsi/" + folder + "/train" + str + FILENAME_APPEND +".csv"));
+                    testLoader.setSource(Neural.class.getResourceAsStream("/main/resources/tsi/" + folder + "/test" + str + FILENAME_APPEND + ".csv"));
 
                     Instances trainSet = trainLoader.getDataSet();
                     trainSet.setClassIndex(0);
@@ -67,9 +67,9 @@ public class Neural {
                 }
             } else {
                 CSVLoader trainLoader = new CSVLoader(), testLoader = new CSVLoader();
-                trainLoader.setSource(new File(Neural.class.getResource("/main/resources/tsi/" + folder + "/train.csv").toURI()));
+                trainLoader.setSource(Neural.class.getResourceAsStream("/main/resources/tsi/" + folder + "/train.csv"));
                 //testLoader.setSource(new File(folder+"/test.csv"));
-                testLoader.setSource(new File(Neural.class.getResource("/main/resources/tsi/" + folder + "/test.csv").toURI()));
+                testLoader.setSource(Neural.class.getResourceAsStream("/main/resources/tsi/" + folder + "/test.csv"));
 
                 trainSet = trainLoader.getDataSet();
                 trainSet.setClassIndex(0);
@@ -296,7 +296,7 @@ public class Neural {
             writer.println(header);
             writer.println(odds);
             writer.close();
-            DataSource tempSource = new DataSource(Neural.class.getResource("/main/resources/tsi/" + folder + "/temp.csv").openStream());
+            DataSource tempSource = new DataSource(Neural.class.getResourceAsStream("/main/resources/tsi/" + folder + "/temp.csv"));
             Instances tempSet = tempSource.getDataSet(0);
             Instance currInstance = tempSet.instance(0);
             double[] distForInstance = percep.distributionForInstance(currInstance);

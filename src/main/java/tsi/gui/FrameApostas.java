@@ -10,7 +10,6 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -62,7 +61,7 @@ public class FrameApostas extends JFrame {
 		popupMenu.setLocation(590, 24);
 		
 		JButton butt = new JButton("");
-        Image buttImg = ImageIO.read(new File(PainelAposta.class.getResource("/main/resources/tsi/img/gear.png").toURI()));
+        Image buttImg = ImageIO.read(PainelAposta.class.getResourceAsStream("/main/resources/tsi/img/gear.png"));
         butt.setIcon(new ImageIcon(buttImg));
 		//butt.setIcon(new ImageIcon("img/gear.png"));
 		butt.setBounds(590,24,26,26);
